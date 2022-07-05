@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | Checkout</title>
+    <link rel="stylesheet" href="static/styles/checkOutStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+    
+<!-- header section starts  -->
+<header>
+    <a href="/home"><img src="/static/images/Logo_01.png"></a>
+    <nav class="navbar">
+        <a href="/home">Porn</a>
+        <a href="/userAccount">Profile</a>
+        <a href="/logout">Logout</a>
+        <div class="navMessage">
+            <a href="/messages"><img src="/static/images/icons/messageIcon.png"></a>
+            <div class="messageCounter">
+                {{unreadMessagesCount}}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="home" id="home">
+    <div class="left">
+    </div>
+    <div class="middle">
+        <div class="itemSide">
+            <div class="imageContainer">
+                <img src="{{checkOutItem.picturePath}}">
+            </div>
+            <div class="infoContainer">
+                <div class="itemNameText">
+                    {{checkOutItem.name}}
+                </div>
+                <div class="itemDataContainer">
+                    <div class="itemPriceText">
+                        {{checkOutItem.price}} $
+                    </div>
+                    <div class="itemRatingText">
+                        Seller-Rep.: {{sellerObject.reputation}} %
+                    </div>
+                    <div class="itemRatingText">
+                        Item-Rep.: {{checkOutItem.rating}} %
+                    </div>
+                </div>
+                <div class="itemDiscriptionContainer">
+                    {{checkOutItem.discription}}
+                </div>
+            </div>
+            <div class="inputContainer">
+                <form action="/buyItem" method="post">
+                    <input hidden value="{{checkOutItem.id}}" name="id">
+                    <div class="inputLine">
+                        <div class="valueName">First Name</div><input type="text" placeholder="enter first name" name="fn" required  maxlength="30">
+                        <div class="valueName">Last Name</div><input type="text" placeholder="enter last name" name="ln" required  maxlength="30">          
+                    </div>
+                    <div class="inputLine">
+                        <div class="valueName">State</div><input type="text" placeholder="enter state" name="rn"  maxlength="60">
+                        <div class="valueName">Country</div><input type="text" placeholder="enter country" name="cn" required  maxlength="60">          
+                    </div>
+                    <div class="inputLine">
+                        <div class="valueName">Street Name</div><input type="text" placeholder="enter street" name="sn" required  maxlength="60">
+                        <div class="valueName">House Number</div><input type="text" placeholder="enter house number" name="hn" required  maxlength="4">          
+                    </div>
+                    <div class="inputLine">
+                        <div class="valueName">Postal</div><input type="text" placeholder="enter zipcode" name="pc" required maxlength="8">
+                        <div class="valueName">City</div><input type="text" placeholder="enter city" name="cy" required maxlength="60">    
+                    </div>
+                    <div class="inputInfoLine">
+                        <div class="valueName">Info</div><input class="test" type="text" placeholder="extra info for seller" name="fo">          
+                    </div>
+                    <button type="submit">BUY</button>
+                </form>
+            </div>
+        </div>
+        <div class="cardList">
+            {%for item in userObject.cardList%}
+            <div class="item">
+            <div class="left">
+                <form action="/checkOut" method="post">
+                <input hidden value="{{item.id}}" name="id">
+                <button type="submit">
+                    <div class="itemContainer">
+                        <div class="imageContainer">
+                            <img  src="{{item.picturePath}}">
+                        </div>
+                        <div class="infoContainer">
+                            <div class="headerContainer">
+                                <div class="itemNameText">
+                                    {{item.name}}
+                                </div>
+                                <div class="itemPriceText">
+                                    {{item.price}} $
+                                </div>
+                            </div>
+                            <div class="discriptionContainer">
+                                {{item.discription}}
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                </form>
+            </div>
+            <div class="right">
+                <div class="actionContainer">
+                    <form action="/itemPage" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">i</button>
+                    </form>
+                    <form action="/removeItemFromCard" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">X</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    <div class="right">
+    </div>
+</section>
+
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/impressum">Impressum</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+</html>

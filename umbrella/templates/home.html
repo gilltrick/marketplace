@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | Hive</title>
+    <link rel="stylesheet" href="static/styles/homeStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+<header>
+    <a href="/home"><img src="/static/images/Logo_01.png"></a>
+
+    <nav class="navbar">
+        <a href="#home">market</a>
+        <a href="/userAccount">Profile</a>
+        <div class="navMessage">
+            <a href="/messages"><img src="/static/images/icons/messageIcon.png"></a>
+            <div class="messageCounter">
+                {{unreadMessagesCount}}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="home" id="home">
+    <div class="left">
+        <div class="top">
+            <form action="/advancedSearch" method="post">
+                <input type="text" placeholder="enter search term" name="searchTerm">
+                <div class="dropDownMenu">
+                    <select name="categorie">
+                    <option value="drug">Drugs</option>
+                    <option value="gun">Weapons &amp; Ammo</option>
+                    <option value="passport">Passports</option>
+                    <option value="girl">Girls</option>
+                    <option value="jewel">Jweels</option>
+                    <option value="document">Documents</option>
+                    <option value="fakeMoney">Fake Money</option>
+                    <option value="account">Accounts</option>
+                    </select>
+                </div>
+                <h3>Select Price Range</h3>
+                <div class="inLine">
+                    <div class="valueNameText">from:</div><input type="text" placholder="0" name="from"><div class="valueNameText">to:</div><input type="text" placholder="9999" name="to"><div class="valueNameText">$</div>
+                </div>
+                <h3>Sort Result by:</h3>
+                <div class="checkBoxContainer">
+                    <div class="valueNameText">Price: high to low</div><input type="checkbox" name="command" value="phtl">
+                </div>
+                <div class="checkBoxContainer">
+                    <div class="valueNameText">Price: low to high</div><input type="checkbox" name="command" value="plth">
+                </div>
+                <div class="checkBoxContainer">
+                    <div class="valueNameText">Rating: high to low</div><input type="checkbox" name="command" value="phtl">
+                </div>
+                <div class="checkBoxContainer">
+                    <div class="valueNameText">Rating: low to high</div><input type="checkbox" name="command" value="plth">
+                </div>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="bottom">
+        </div>
+    </div>
+    <div class="middle">
+        <div class="searchContainer">
+            <form action="/search" method="post">
+                <input type="text" placeholder="Search here..." name="searchTerm">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        {%if resultList|length == 0%}
+        <div class="popularItemsContainer">
+            <div class="titleText">Popular Items</div>
+            <div class="itemsContainer">
+                {%for item in popularItemsList%}
+                <div class="itemContainer">
+                    <form action="/itemPage" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">
+                            <img src="{{item.picturePath}}">
+                        </button>
+                    </form>
+                    <div class="infoContainer">
+                        <div class="priceText">
+                            {{item.price}} $
+                        </div>
+                        <div class="ratingText">
+                            {{item.rating}} %
+                        </div>
+                    </div>
+                    <div class="itemText">
+                        {{item.name}}
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="sponsoredItemsContainer">
+            <div class="titleText">Sponsored Items</div>
+            <div class="itemsContainer">
+                {%for item in sponsoredItemsList%}
+                <div class="itemContainer">
+                    <form action="/itemPage" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">
+                            <img src="{{item.picturePath}}">
+                        </button>
+                    </form>
+                    <div class="infoContainer">
+                        <div class="priceText">
+                            {{item.price}} $
+                        </div>
+                        <div class="ratingText">
+                            {{item.rating}} %
+                        </div>
+                    </div>
+                    <div class="itemText">
+                        {{item.name}}
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        {%endif%}
+        {%if resultList|length > 0%}
+        <div class="searchResultContainer">
+        {%for item in resultList%}
+            <div class="itemContainer">
+                <div class="imageContainer">
+                    <form action="/itemPage" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">
+                            <img src="{{item.picturePath}}">
+                        </button>
+                    </form>
+                </div>
+                <div class="infoContainer">
+                    <div class="itemHeader">
+                        <div class="itemNameText">
+                            {{item.name}}
+                        </div>
+                        <div class="itemPriceText">
+                            {{item.price}} USD
+                        </div>
+                    </div>
+                    <div class="itemDiscriptionText">
+                        {{item.discription}}
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+        </div>
+        {%endif%}
+    </div>
+    <div class="right">
+    </div>
+</section>
+
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/impressum">Impressum</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+<script src="/static/js/home.js"></script>
+</html>

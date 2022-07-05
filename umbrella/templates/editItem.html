@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | Edit Item</title>
+    <link rel="stylesheet" href="static/styles/editItemStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+<header>
+    <a href="/home"><img src="/static/images/Logo_01.png"></a>
+    <nav class="navbar">
+        <a href="/home">Market</a>
+        <a href="/userAccount">Profile</a>
+    </nav>
+
+</header>
+<section class="home" id="home">
+    <div class="left"></div>
+    <div class="middle">
+        <div class="editItemContainer">
+            <form action="/editItem" method="post">
+                <div class="titleText">CHANGE ITEM NAME</div>
+                <div class="inputContainer">
+                    <input type="text" placeholder="{{item.name}}" name="itemTitle">
+                </div>
+                <div class="titleText">CHANGE ITEM PRICE</div>
+                <div class="inputContainer">
+                    <input type="text" placeholder="{{item.price}}" name="itemTitle">
+                </div>
+                <div class="titleText">CHANGE ITEM DISCRIPTION</div>
+                <div class="inputContainer">
+                    <textarea name="itemDiscription" placeholder="{{item.discription}}" cols="15" rows="10"></textarea>
+                </div>
+                <div class="buttonsContainer">
+                    <div class="leftButton">
+                        <input type="file" id="custom-file-input" name="images" multiple hidden/>
+                        <label for="custom-file-input">Choose Pictures</label>
+                    </div>
+                    <div class="rightButton">
+                        <button type="submit" >Save Changes</button>
+                    </div>
+                </div>
+            </form>
+            <div class="picturesContainer">
+            {%for picturePath in item.galerieList%}
+                <div class="imageContainer">
+                    <img src="/static/images/Logo_01.png">
+                    <div class="deleteButtonContainer">
+                        <form action="/deletePictureFromItem" method="post">
+                            <input hidden value="{{picturePath}}" name="picturePath">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">X</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+            <div class="bottom">
+                <form action="/deleteItem" method="post">
+                    <input hidden value="itemId" name="id">
+                    <button type="submit">delete</submit>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="right"></div>
+</section>
+
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+</html>

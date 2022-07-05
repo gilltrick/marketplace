@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | Login</title>
+    <link rel="stylesheet" href="static/styles/loginStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+<header>
+    <a href="/"><img src="/static/images/Logo_01.png"></a>
+    {%if isLogedIn == True%}
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+    <nav class="navbar">
+        <a href="/home">Porn</a>
+        <a href="/userAccount">Profile</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    {%endif%}
+    {%if isLogedIn == False%}
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+    <nav class="navbar">
+
+    </nav>
+    {%endif%}
+</header>
+<section class="home" id="home">
+    <div class="login">
+        <form action="/loginUser", method="post">
+            <div class="labelText">Username:</div>
+            <input type="text" placeholder="username" name="username">
+            <div class="labelText">Password:</div>
+            <input type="password" placeholder="password" name="password">
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+    <div class="registerContainer">
+        <a class="registerLink" href="/register">Register</a>
+        <a class="resettLink" href="/forgottPassword">Forgott Password</a>
+    </div>
+</section>
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+</html>

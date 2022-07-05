@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | Register</title>
+    <link rel="stylesheet" href="static/styles/registerUserStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+<header>
+    <a href="/"><img src="/static/images/Logo_01.png"></a>
+
+    <input type="checkbox" id="menu-bar">
+    <label for="menu-bar" class="fas fa-bars"></label>
+    <nav class="navbar">
+    </nav>
+</header>
+<section class="home" id="home">
+    <div class="login">
+        <form action="/registerUser", method="post">
+            <div class="labelText">Username:</div>
+            <input type="text" placeholder="username" name="username" required>
+            <div class="labelText">Nick-Name:</div>
+            <input type="text" placeholder="nickname" name="nickName" required>
+            <div class="labelText">e-Mail:</div>
+            <input type="email" placeholder="email" name="email" required>
+            <div class="labelText">Password:</div>
+            <input type="password" placeholder="password" name="password" required>
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+</section>
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+</html>

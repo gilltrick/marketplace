@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+{%block content%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umbrella | {{userObject.nickName}}</title>
+    <link rel="stylesheet" href="static/styles/webguiStyle.css">
+    <link rel="shortcut icon" href="/static/favIcon.ico">
+</head>
+<body>
+<header>
+    <a href="/home"><img src="/static/images/Logo_01.png"></a>
+    <div class="nothing"></div>
+    <nav class="navbar">
+        <a href="/userAccount"><img src="/static/images/icons/reload.png"></a>
+        <a href="/home">Market</a>
+        <a href="/logout">Logout</a>
+        <div class="navMessage">
+            <a href="/messages"><img src="/static/images/icons/messageIcon.png"></a>
+            <div class="messageCounter">
+                {{unreadMessagesCount}}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="database" id="database">
+    <div class="databaseContainer">
+        <div class="infoContainer">
+            Hier steht die info
+        </div>
+        <div class="dbMenu">
+            <div class="menuBtn">
+                <button class="openPurchasedItemsContainer">Purchased</button>
+            </div>
+            <div class="menuBtn">
+                <button class="openFavoriteItemsContainer">Favorites</button>
+            </div>
+            <div class="menuBtn">
+                <button class="openForSaleItemsContainer">Item For Sale</button>
+            </div>
+            <div class="menuBtn">
+                <button class="openAddItemContainer">Add-Item</button>
+            </div>
+            <div class="menuBtn">
+                <button class="openEditUserContainer">Account Settings</button>
+            </div>
+        </div>
+        <div class="purchasedItemsContainer">
+            <div class="menuCategorieTitleText">
+                Purchased Items
+            </div>           
+            <div class="listContainer">
+                {%for item in userObject.purchasedItemsObjectList%}
+                <div class="itemContainer">
+                    <div class="imageContainer">
+                        <form action="/itemPage" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">
+                            <img src="{{item.picturePath}}">
+                            </button>
+                        </form>
+                    </div>
+                    <div class="itemInfoContainer">
+                        <div class="itemHeader">
+                            <div class="itemTitle">
+                                {{item.name}}
+                            </div>
+                            <div class="itemPrice">
+                                {{item.price}} USD
+                            </div>
+                        </div>
+                        <div class="itemDiscription">
+                            {{item.discription}}
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="favoriteItemsContainer">
+            <div class="menuCategorieTitleText">
+                Favorites-List
+            </div>           
+            <div class="listContainer">
+                {%for item in userObject.favoriteObjectList%}
+                <div class="itemContainer">
+                    <form action="/itemPage" method="post">
+                        <input hidden value="{{item.id}}" name="id">
+                        <button type="submit">
+                            <img src="{{item.picturePath}}">
+                        </button>
+                    </form>
+                    <div class="itemInfoContainer">
+                        <div class="itemHeader">
+                            <div class="itemTitle">
+                                {{item.name}}
+                            </div>
+                            <div class="itemPrice">
+                                {{item.price}} $
+                            </div>
+                        </div>
+                        <div class="itemDiscription">
+                            {{item.discription}}
+                        </div>
+                    </div>
+                    <div class="actionContainer">
+                        <form action="/itemPage" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">Check</button>
+                        </form>
+                        <form action="/removeItemFromFavoriteList" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">X</button>
+                        </form>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="forSaleItemsContainer">
+            <div class="menuCategorieTitleText">
+                Items For Sale
+            </div>           
+            <div class="listContainer">
+                {%for item in userObject.itemObjectList%}
+                <div class="itemContainer">
+                    <img src="{{item.picturePath}}">
+                    <div class="itemInfoContainer">
+                        <div class="itemHeader">
+                            <div class="itemTitle">
+                                {{item.name}}
+                            </div>
+                            <div class="itemPrice">
+                                {{item.price}} USD
+                            </div>
+                        </div>
+                        <div class="itemDiscription">
+                            {{item.discription}}
+                        </div>
+                    </div>
+                    <div class="actionContainer">
+                        <form action="/itemPage" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">Show</button>
+                        </form>
+                        <form action="/editItem" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">X</button>
+                        </form>
+                        <form action="/deleteItem" method="post">
+                            <input hidden value="{{item.id}}" name="id">
+                            <button type="submit">delete</button>
+                        </form>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="addItemContainer">
+            <div class="menuCategorieTitleText">
+                Add Item for sale
+            </div>
+            <form id="createItem" action="/createItem" enctype=multipart/form-data method="post">
+                <input hidden value="{{userObject.id}}" name="id">
+                <div class="dataInputRow">
+                    <div class="dataName">
+                        Item-Name: 
+                    </div>
+                    <div class="dataValueInput">
+                        <input type="text" placeholder="Item Title" name="itemName" required maxlength="40">
+                    </div>
+                </div>
+                <div class="dataInputRowTextArea">
+                    <div class="dataName">
+                        Item-Discription: 
+                    </div>
+                    <textarea required name="itemDiscription" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="dataInputRow">
+                    <div class="dataName">
+                        Item-Price: 
+                    </div>
+                    <div class="dataValueInput">
+                        <input type="text" placeholder="Item Price" name="itemPrice" required maxlength="9">
+                    </div>
+                </div>
+                <div class="dataInputRow">
+                    <div class="dataName">
+                        Sale Tags: 
+                    </div>
+                    <div class="dataValueInput">
+                        <input type="text" placeholder="enter tags or categories here" name="categories" maxlength="40">
+                    </div>
+                </div>
+                <div class="inlineContainer">
+                    <div class="uploadButtonContainer">
+                        <input type="file" id="custom-file-input" name="images" multiple hidden/>
+                        <label for="custom-file-input">Choose Pictures</label>
+                    </div>
+                </div>
+                <br>
+                <button class="addToDatabaseBtn" type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="editUserContainer">
+            <div class="menuCategorieTitleText">
+                Edit Your Account Settings
+            </div>
+            <div class="changeContainer">
+                <form action="/editUser" method="post">
+                    <div class="inputContainer">
+                        <div class="inputText">
+                            Change Nick-Name
+                        </div>
+                        <input type="text" placeholder="enter new nick name" name="nickName">
+                    </div>
+                    <div class="inputContainer">
+                        <div class="inputText">
+                            Change e-Mail
+                        </div>
+                        <input type="text" placeholder="enter new e-mail" name="email">
+                    </div>
+                    <div class="inputContainer">
+                        <div class="inputText">
+                            Change Password
+                        </div>
+                        <input type="text" placeholder="enter new password" name="newPassword">
+                    </div>
+                    <div class="inputContainer">
+                        <div class="inputText">
+                            Current Password
+                        </div>
+                        <input type="text" placeholder="current password", name="password">
+                    </div>
+                    <button type="submit">Save changes</button>
+                </form>
+            </div>
+            <div class="deleteUserContainer">
+                <form action="/deleteUserAccount" method="post">
+                    <input hidden value="{{userObject.id}}" name="id">
+                    <div class="hiddenInput">
+                        <div class="deleteInfoText">
+                            Enter Password
+                        </div>
+                        <input type="text" placeholder="enter password" name="password">
+                        <button type="submit">Realy?</button>
+                    </div>
+                    <div class="toHideContainer">
+                    <button class="showPasswordForDeleteUserContainer" type="button">Delete User</button>
+                    </div>
+                </form>
+            </div>
+            <div class="changeWalletContainer">
+                <form action="/changeWallet" method="post">
+                    <input hidden value="{{userObject.id}}" name="id">
+                    <div class="hiddenWalletInput">
+                        <div class="deleteInfoText">
+                            Enter Password
+                        </div>
+                        <input type="text" placeholder="enter password" name="password">
+                        <div class="deleteInfoText">
+                            Enter Wallet Address
+                        </div>
+                        <input type="text" placeholder="enter wallet address" name="password">
+                        <button type="submit">Change Wallet</button>
+                    </div>
+                    <div class="toHideContainer">
+                    <button class="showChangeWalletContainer" type="button">Save Wallet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>   
+</section>
+
+<div class="footer">
+    <div class="box-container">
+        <div class="box">
+            <h3>quick links</h3>
+            <table class="footerContent">
+                <tr>
+                    <td class="quickLink">
+                        <a href="#home">Home</a>
+                    </td>
+                    <td class="quickLink">
+                        <a href="/login">Login</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="devNote">
+    This site is for demonstration purpose only - I offer custom webservices including frontend, backend, databases, storage, hosting, cryptopayment and more. 
+</div>
+<div class="bg"></div>
+<div class="star-field">
+<div class="layer"><h1></div>
+<div class="layer"></div>
+<div class="layer"></div>
+</body>
+{%endblock%}
+<script src="/static/js/userWebGui.js"></script>
+</html>
